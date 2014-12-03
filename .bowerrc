@@ -1,4 +1,4 @@
 {
-  "directory": "src/js/vendor/",
+  "directory": "src/vendor/",
   "analytics": false
 }

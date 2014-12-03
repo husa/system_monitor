@@ -1,12 +1,109 @@
 <!DOCTYPE html>
-<html ng-app ng-csp>
+<html ng-app="systemMonitor" ng-csp>
 <head>
   <title>System Monitor</title>
-  <script src="../js/vendor/angular/angular.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="../vendor/angular/angular-csp.css" />
+  <script src="../vendor/angular/angular.min.js"></script>
+
   <script src="../js/app.js"></script>
 </head>
 <body>
-    {{'hello'}} {{'there'}}
+  <div ng-controller="CPUController">
+    <h1>CPU</h1>
+    <div>Model {{data.modelName}}</div>
+    <div>Architecture {{data.archName}}</div>
+    <div>Processor count {{data.numOfProcessors}}</div>
+    <div>
+      features
+      <ul>
+        <li ng-repeat="feature in data.features">
+          {{feature}}
+        </li>
+      </ul>
     </div>
+    <div>
+      Processors:
+      <ul>
+        <li ng-repeat="proc in processors track by $index">
+          {{proc * 100 | number:2}}%
+        </li>
+      </ul>
+    </div>
+    <div ng-show="showJSON">
+      <h3>JSON data</h3>
+      <pre>
+        {{processors | json}}
+      </pre>
+      <pre>
+        {{data | json}}
+      </pre>
+    </div>
+  </div>
+
+  <div ng-controller="MemoryController">
+    <h1>Memory</h1>
+    <ul>
+      <li>Total: {{(memory.capacity / (1024 * 1024)) | number:0}}MB</li>
+      <li>Available: {{(memory.availableCapacity / (1024 * 1024)) | number:0}}MB</li>
+      <li>Used: {{ (100 - (memory.availableCapacity * 100) / memory.capacity) | number:2 }}%</li>
+    </ul>
+    <div ng-show="showJSON">
+      <pre>
+        {{memory | json}}
+      </pre>
+    </div>
+  </div>
+
+  <div ng-controller="StorageController">
+    <h1>Storage</h1>
+    <ul>
+      <li ng-repeat="drive in storage">
+        <h3>{{drive.name}}</h3>
+        <div>Type: {{drive.type}} </div>
+        <div>Capacity: {{(drive.capacity / (1024 * 1024)) | number:0}}MB</div>
+
+      </li>
+    </ul>
+    <div ng-show="showJSON">
+      <pre>
+        {{storage | json}}
+      </pre>
+    </div>
+  </div>
+
+  <div ng-controller="DisplayController">
+    <h1>Display</h1>
+    <ul>
+      <li ng-repeat="display in displays">
+        <h3>{{display.name}} {{display.bounds.width}}x{{display.bounds.height}} </h3>
+        <ul>
+          <li>Primary: {{display.isPrimary}}</li>
+          <li>Internal: {{display.isInternal}}</li>
+          <li>Enabled: {{display.isEnabled}}</li>
+          <li>dpiX: {{display.dpiX}}</li>
+          <li>dpiY: {{display.dpiY}}</li>
+        </ul>
+      </li>
+    </ul>
+    <div ng-show="showJSON">
+      <pre>
+        {{displays | json}}
+      </pre>
+    </div>
+  </div>
+
+  <div ng-controller="NetworkController">
+    <h1>Network</h1>
+    <ul>
+      <li ng-repeat="interface in interfaces">
+        <h3>{{interface.address}} </h3>
+      </li>
+    </ul>
+    <div ng-show="showJSON">
+      <pre>
+        {{interfaces|json}}
+      </pre>
+    </div>
+  </div>
 </body>
 </html>
