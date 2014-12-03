@@ -1,0 +1,19 @@
+{
+  "name": "System Monitor",
+  "description": "system monitor",
+  "version": "0.0.0",
+  "manifest_version": 2,
+  "app": {
+    "background": {
+      "scripts": ["js/background.js"]
+    }
+  },
+  "icons": {},
+  "permissions" : [
+    "system.cpu",
+    "system.memory",
+    "system.network",
+    "system.display",
+    "system.storage"
+  ]
+}
