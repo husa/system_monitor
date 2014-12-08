@@ -3,6 +3,7 @@
 <head>
   <title>System Monitor</title>
   <link rel="stylesheet" type="text/css" href="../vendor/angular/angular-csp.css" />
+  <link rel="stylesheet" type="text/css" href="../css/main.css" />
   <script src="../vendor/angular/angular.min.js"></script>
 
   <script src="../js/app.js"></script>
@@ -24,9 +25,11 @@
     <div>
       Processors:
       <ul>
-        <li ng-repeat="proc in processors track by $index">
+        <sm-donut data="proc" ng-repeat="proc in processors track by $index">
+        </sm-donut>
+        <!-- <li >
           {{proc * 100 | number:2}}%
-        </li>
+        </li> -->
       </ul>
     </div>
     <div ng-show="showJSON">
@@ -43,9 +46,11 @@
   <div ng-controller="MemoryController">
     <h1>Memory</h1>
     <ul>
-      <li>Total: {{(memory.capacity / (1024 * 1024)) | number:0}}MB</li>
-      <li>Available: {{(memory.availableCapacity / (1024 * 1024)) | number:0}}MB</li>
-      <li>Used: {{ (100 - (memory.availableCapacity * 100) / memory.capacity) | number:2 }}%</li>
+      <li>Total: {{total|GB}}</li>
+      <li>Available: {{available|GB:2}}</li>
+      <li>Used: {{used|GB:2}}</li>
+      <sm-donut data="1 - (available / total)"></sm-donut>
+      <li>Used: {{ (100 - (available * 100) / total) | number:2 }}%</li>
     </ul>
     <div ng-show="showJSON">
       <pre>
@@ -60,8 +65,7 @@
       <li ng-repeat="drive in storage">
         <h3>{{drive.name}}</h3>
         <div>Type: {{drive.type}} </div>
-        <div>Capacity: {{(drive.capacity / (1024 * 1024)) | number:0}}MB</div>
-
+        <div>Capacity: {{drive.capacity|GB:2}}</div>
       </li>
     </ul>
     <div ng-show="showJSON">

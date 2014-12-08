@@ -1,0 +1,24 @@
+<div
+  class="sm-donut"
+  style="width: {{width}}px; height: {{height}}px">
+  <svg version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    ng-attr-width="{{width}}"
+    ng-attr-height="{{height}}">
+    <circle
+      cx="0"
+      cy="0"
+      fill="none"
+      stroke="tomato"
+      ng-attr-stroke-width="{{thick}}"
+      ng-attr-r="{{radius}}"
+      ng-attr-transform="translate({{width/2}} {{height/2}}) rotate(-90)"
+      ng-attr-stroke-dasharray="{{2*radius*PI}}"
+      ng-attr-stroke-dashoffset="{{2*PI*radius*(1 - data)|number:0}}"
+      />
+  </svg>
+  <span
+    style="line-height: {{height}}px">
+    {{data*100|number:0}}%
+  </span>
+</div>
